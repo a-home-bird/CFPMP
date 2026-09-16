@@ -1,0 +1,23 @@
+2026-09-16 19:57:21,241 - MRLMRP - INFO - ### model configuration ###
+2026-09-16 19:57:21,242 - MRLMRP - INFO - training.set=./datasets/mineral-Li/train.csv
+2026-09-16 19:57:21,242 - MRLMRP - INFO - test.set=./datasets/mineral-Li/test.csv
+2026-09-16 19:57:21,242 - MRLMRP - INFO - dev.set=./datasets/mineral-Li/dev.csv
+2026-09-16 19:57:21,242 - MRLMRP - INFO - model.name=MRLMRP
+2026-09-16 19:57:21,242 - MRLMRP - INFO - model.type=graph
+2026-09-16 19:57:21,242 - MRLMRP - INFO - item.ranking=-topN 10,20
+2026-09-16 19:57:21,242 - MRLMRP - INFO - embedding.size=64
+2026-09-16 19:57:21,242 - MRLMRP - INFO - num.max.epoch=300
+2026-09-16 19:57:21,242 - MRLMRP - INFO - batch_size=2048
+2026-09-16 19:57:21,242 - MRLMRP - INFO - learnRate=0.001
+2026-09-16 19:57:21,242 - MRLMRP - INFO - reg.lambda=0.0001
+2026-09-16 19:57:21,242 - MRLMRP - INFO - MRLMRP=-n_layer 3 -ssl_reg 1e-6 -proto_reg 1e-7 -tau 0.05 -hyper_layers 1 -alpha 1.5 -num_clusters 200
+2026-09-16 19:57:21,242 - MRLMRP - INFO - output.setup=-dir ./results/
+2026-09-16 19:57:21,242 - MRLMRP - INFO - seed=42
+2026-09-16 19:57:21,242 - MRLMRP - INFO - mineral_embedding_path=./pretrained_emb/mineral_embeddings_64.pt
+2026-09-16 19:57:21,242 - MRLMRP - INFO - mineral_dict_path=./datasets/mineral-Li/mineral_list.txt
+2026-09-16 19:57:21,242 - MRLMRP - INFO - k=3
+2026-09-16 19:57:21,242 - MRLMRP - INFO - coe=0.3
+2026-09-16 19:58:54,207 - MRLMRP - INFO - ###Evaluation Results (dev_result)###
+2026-09-16 19:58:54,208 - MRLMRP - INFO - ['Top 10\n', 'Hit Ratio:0.39037\n', 'Precision:0.27869\n', 'Recall:0.53124\n', 'NDCG:0.53285\n', 'Top 20\n', 'Hit Ratio:0.52547\n', 'Precision:0.18757\n', 'Recall:0.66012\n', 'NDCG:0.56647\n']
+2026-09-16 19:58:54,239 - MRLMRP - INFO - ###Evaluation Results (test_result)###
+2026-09-16 19:58:54,239 - MRLMRP - INFO - ['Top 10\n', 'Hit Ratio:0.39001\n', 'Precision:0.29162\n', 'Recall:0.53721\n', 'NDCG:0.548\n', 'Top 20\n', 'Hit Ratio:0.51881\n', 'Precision:0.19396\n', 'Recall:0.66057\n', 'NDCG:0.57306\n']
