@@ -71,14 +71,13 @@ class Interaction(Data,Graph):
         
 
     def get_composition_descriptor(self, formula_path, mineral_id_path):
-        # mineral name -> element composition
+       
         with open(formula_path, 'r', encoding='utf-8') as f:
             formula_dict = json.load(f)
 
-        # global mineral id -> mineral name
+       
         mineral_dict = self.get_mineral_dict(mineral_id_path)
 
-        # 使用整个 ima_dict 构造固定 element vocabulary
         element_set = set()
         for comp in formula_dict.values():
             element_set.update(comp.keys())
@@ -91,7 +90,7 @@ class Interaction(Data,Graph):
         result = []
         missing = []
 
-        # 使用 internal item index 顺序，保证与模型 item embedding 完全对应
+        
         for item_idx in range(self.item_num):
             global_id = str(self.id2item[item_idx])
 
@@ -142,23 +141,23 @@ class Interaction(Data,Graph):
     def build_topk_normalized_adj(self,context, k=10, symmetric=False):
         N = context.size(0)
 
-        # 1. 计算相似度
+        
         context_norm = context / torch.norm(context, p=2, dim=-1, keepdim=True)
         sim = torch.mm(context_norm, context_norm.T)  # N×N
 
-        # 2. 去掉对角元素
+        
         sim.fill_diagonal_(-float('inf'))
 
-        # 3. 获取 top-k 索引
+        
         top_val, topk_indices = torch.topk(sim, k=k, dim=-1)  # (N, k)
 
-        # 4. 构造邻接矩阵，值为1
+        
         row_idx = torch.arange(N, device=context.device).unsqueeze(1).expand(-1, k).reshape(-1)
         col_idx = topk_indices.reshape(-1)
         values = torch.ones_like(row_idx, dtype=torch.float32)
         #values = top_val.flatten()
 
-        # 如果对称化则加上反向边
+        
         if symmetric:
             row_idx = torch.cat([row_idx, col_idx], dim=0)
             col_idx = torch.cat([col_idx, row_idx[:len(col_idx)]], dim=0)
@@ -167,7 +166,7 @@ class Interaction(Data,Graph):
         indices = torch.stack([row_idx, col_idx], dim=0)
         adj = torch.sparse.FloatTensor(indices, values, torch.Size([N, N]))
 
-        # 5. 邻接归一化：D^(-1/2) A D^(-1/2)
+        
         deg = torch.sparse.sum(adj, dim=1).to_dense()  # (N,)
         deg_inv_sqrt = torch.pow(deg, -0.5)
         deg_inv_sqrt[deg_inv_sqrt == float('inf')] = 0
@@ -244,7 +243,7 @@ class Interaction(Data,Graph):
         '''
         return a sparse adjacency matrix with the shape (user number + item number, user number + item number)
         '''
-        # 原始二部图构建
+        
         n_nodes = self.user_num + self.item_num
         row_idx = [self.user[pair[0]] for pair in self.training_data]
         col_idx = [self.item[pair[1]] for pair in self.training_data]
@@ -264,7 +263,7 @@ class Interaction(Data,Graph):
         '''
         return a sparse adjacency matrix with the shape (user number + item number, user number + item number)
         '''
-        # 原始二部图构建
+        
         row_idx = [self.user[pair[0]] for pair in self.training_data]
         col_idx = [self.item[pair[1]] for pair in self.training_data]
         user_np = np.array(row_idx)
@@ -279,7 +278,7 @@ class Interaction(Data,Graph):
         '''
         return a sparse adjacency matrix with the shape (user number + item number, user number + item number)
         '''
-        """ # 原始二部图构建
+        """ 
         n_nodes = self.user_num + self.item_num
         row_idx = [self.user[pair[0]] for pair in self.training_data]
         col_idx = [self.item[pair[1]] for pair in self.training_data]
@@ -292,7 +291,7 @@ class Interaction(Data,Graph):
             adj_mat += sp.eye(n_nodes) """
 
 
-        #添加虚拟全局节点
+        
         n_nodes = self.user_num + self.item_num
 
         virtual_node = self.item_num
@@ -318,7 +317,7 @@ class Interaction(Data,Graph):
 
 
 
-        # 添加虚边，效果较差
+        
         """ argument_user = []
         for k,v in self.user_degree.items():
             if v < 3:
