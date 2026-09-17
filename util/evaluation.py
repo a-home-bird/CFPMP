@@ -20,7 +20,7 @@ class Metric(object):
             p_result.append(sum(p_hit[i])/len(p_hit[i]))
         return p_result
     
-    # 为了统计不同稀疏度的预测情况
+    
     @staticmethod
     def P_sparsity(origin, res):
         p_hit = [[],[],[],[],[]]
@@ -269,7 +269,7 @@ def ranking_evaluation_for_sparsity(origin, res, N,save_path):
         for user in p_result.keys():
             p_result[user].append(NDCG[user])
     
-    #添加预测真值
+    
     """ for user in res:
         p_result[user].append(res[user][:5]) """
 
