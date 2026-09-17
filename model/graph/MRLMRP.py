@@ -50,7 +50,7 @@ class MRLMRP(GraphRecommender):
         context_user_emb = context_user_emb_all[user]
         initial_user_emb = initial_user_emb_all[user]
 
-        #添加一个线性变换
+       
         #context_user_emb, initial_user_emb = model.linear_transformer(context_user_emb,initial_user_emb)
 
         norm_user_emb1 = F.normalize(context_user_emb)
